@@ -77,10 +77,7 @@ void Section3()
 }
 
 void TuntiTehtävä5() {
-	cout << endl << " If this text, " << endl;
-	cout << " appears on your display, " << endl;
-	cout << " you can pat yourself on, " << endl;
-	cout << " the back!" << endl;
+
 }
 
 void AskData()
