@@ -66,7 +66,7 @@ void Section2()
 	cout << "What is the amount of monthly support? (123.45)" << endl;
 	cout << "Amount:";
 	cin >> monthlyAmount;
-	cout << "Thank you!" << endl;
+	cout << "Thank you!" << endl << endl;
 	yearlySum = monthlyAmount * months;
 	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
 }
