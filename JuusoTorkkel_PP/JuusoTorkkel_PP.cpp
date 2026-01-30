@@ -16,6 +16,7 @@ void Section3();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
+void CalculateGrade();
 
 //Variables for Section1()
 string name;
@@ -29,6 +30,10 @@ int months;
 float monthlyAmount;
 float yearlySum;
 
+//Variables for Section3()
+int userGivenScore;
+int printedGrade;
+
 int main()
 {
 	//Special characters (ä, ö, ü, etc.)
@@ -39,13 +44,13 @@ int main()
 
 	
 
-	Section2();
+	//Section2();
 
-	Section1();
+	//Section1();
 
 	Section3();
 
-	TuntiTehtävä5();
+	//TuntiTehtävä5();
 
 	cout << endl << "The program ends and shuts down automatically." << endl;
 }
@@ -73,7 +78,14 @@ void Section2()
 
 void Section3()
 {
-
+	cout << "Insert exam points (0-100) and you will recive a grade" << endl;
+	cout << "Score:";
+	cin >> userGivenScore;
+	CalculateGrade();
+	cout << "Your grade is: " << printedGrade << endl;
+	if (userGivenScore == 100) {
+		cout << "Congratulations! You got full points!" << endl << endl;
+	}
 }
 
 void TuntiTehtävä5() {
@@ -107,5 +119,36 @@ void PrintData()
 	cout << "Your data has been saved to... nowhere." << endl << endl;
 }
 
+void CalculateGrade()
+{
+	if (userGivenScore >= 0 && userGivenScore <= 49){
+		printedGrade = 0;
+	}
 
+	if (userGivenScore >= 50 && userGivenScore <= 59) {
+		printedGrade = 1;
+	}
+
+	if (userGivenScore >= 60 && userGivenScore <= 69) {
+		printedGrade = 2;
+	}
+
+	if (userGivenScore >= 70 && userGivenScore <= 79) {
+		printedGrade = 3;
+	}
+
+	if (userGivenScore >= 80 && userGivenScore <= 89) {
+		printedGrade = 4;
+	}
+
+	if (userGivenScore >= 90 && userGivenScore <= 100) {
+		printedGrade = 5;
+	}
+
+	if (userGivenScore < 0 || userGivenScore > 100) {
+		Section3();
+	}
+
+
+}
 
