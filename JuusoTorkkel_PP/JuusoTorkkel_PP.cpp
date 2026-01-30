@@ -57,9 +57,9 @@ int main()
 
 	//Section1();
 
-	Section3();
+	//Section3();
 
-	//TuntiTehtävä5();
+	TuntiTehtävä5();
 
 	cout << endl << "The program ends and shuts down automatically." << endl;
 }
@@ -116,6 +116,61 @@ void Section3()
 }
 
 void TuntiTehtävä5() {
+
+	float comparison;
+	float factor;
+	float result;
+	float num = 1;
+	cout << "Give a positive number: ";
+	cin >> comparison;
+	cout << "Give a factor: ";
+	cin >> factor;
+	do
+	{
+		result = num * factor;
+		cout << result << endl;
+		num = result;
+	} while ( result <= comparison);
+
+
+
+	/*int num;
+	int howManyCharsLong = 0;
+	cout << "Give a number:" << endl;
+	cin >> num;
+	while (num > 0) {
+		howManyCharsLong++;
+		num /= 10;
+	}
+	cout << "The number has " << howManyCharsLong << " characters";*/
+	
+	/*int num = -1;
+	while (num < 6) {
+		num++;
+		if(num == 3 || num == 5){
+			continue;
+		}
+		cout << num << endl;
+	}*/
+
+	/*int input;
+	cout << "Give any number but (5)" << endl;
+	cin >> input;
+	while (input != 5) {
+		cout << "Give any number but (5)" << endl;
+		cin >> input;
+	}
+	cout << "Stop that!" << endl;*/
+
+	/*int posNum;
+	int num;
+	cout << "Enter a positive number greater than 1" << endl;
+	cout << "Number: ";
+	cin >> posNum;
+	num = 1;
+	while (num <= posNum) {
+		cout << num++ << endl;*/
+	
 
 }
 
@@ -181,10 +236,9 @@ void CalculateGrade()
 
 void ConvertKm()
 {
-	cout << "Convert to miles input M" << endl;
-	cout << "Convert to nautical miles input N" << endl;
-	cout << "Quit input Q" << endl;
-	cout << "Input: ";
+	cout << "M - Convert to miles" << endl;
+	cout << "N - Convert to nautical miles" << endl;
+	cout << "Q - Quit input" << endl;
 	cin >> userChar;
 
 	if (userChar == 'M' || userChar == 'm') {
@@ -198,7 +252,7 @@ void ConvertKm()
 	}
 
 	if (userChar == 'Q' || userChar == 'q') {
-		//exit here
+		return;
 	}
 }
 
