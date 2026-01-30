@@ -17,6 +17,7 @@ void TuntiTehtävä5();
 void AskData();
 void PrintData();
 void CalculateGrade();
+void ConvertKm();
 
 //Variables for Section1()
 string name;
@@ -31,8 +32,16 @@ float monthlyAmount;
 float yearlySum;
 
 //Variables for Section3()
+//Grade
 int userGivenScore;
 int printedGrade;
+int fork;
+//Distance
+float distanceKm;
+float miles;
+float nauticalMiles;
+char userChar;
+
 
 int main()
 {
@@ -78,13 +87,31 @@ void Section2()
 
 void Section3()
 {
-	cout << "Insert exam points (0-100) and you will recive a grade" << endl;
-	cout << "Score:";
-	cin >> userGivenScore;
-	CalculateGrade();
-	cout << "Your grade is: " << printedGrade << endl;
-	if (userGivenScore == 100) {
-		cout << "Congratulations! You got full points!" << endl << endl;
+	cout << "Count grade input 1" << endl;
+	cout << "Kilometer converter input 2" << endl;
+	cout << "Input: ";
+	cin >> fork;
+	
+	if (fork == 1) {
+		cout << "Insert exam points (0-100) and you will recive a grade" << endl;
+		cout << "Score:";
+		cin >> userGivenScore;
+		CalculateGrade();
+		cout << "Your grade is: " << printedGrade << endl;
+		if (userGivenScore == 100) {
+			cout << "Congratulations! You got full points!" << endl << endl;
+		}
+	}
+	
+	if (fork == 2) {
+		cout << "Give distance in kilometers" << endl;
+		cout << "Distance: ";
+		cin >> distanceKm;
+		ConvertKm();
+	}
+
+	else {
+		Section3();
 	}
 }
 
@@ -150,5 +177,28 @@ void CalculateGrade()
 	}
 
 
+}
+
+void ConvertKm()
+{
+	cout << "Convert to miles input M" << endl;
+	cout << "Convert to nautical miles input N" << endl;
+	cout << "Quit input Q" << endl;
+	cout << "Input: ";
+	cin >> userChar;
+
+	if (userChar == 'M' || userChar == 'm') {
+		miles = distanceKm * 0.6215;
+		cout << "Distance in miles: " << miles << endl;
+	}
+
+	if (userChar == 'N' || userChar == 'n') {
+		nauticalMiles = distanceKm * 0.5399;
+		cout << "Distance in nautical miles: " << nauticalMiles << endl;
+	}
+
+	if (userChar == 'Q' || userChar == 'q') {
+		//exit here
+	}
 }
 
