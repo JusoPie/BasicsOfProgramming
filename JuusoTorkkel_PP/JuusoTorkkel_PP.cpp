@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <cstdlib> //Found that this library contains exits
+
 #include <Windows.h>
 
 #include <string>
@@ -10,16 +12,20 @@
 using namespace std;
 
 //In C/C++ programs, functions must be declared before they are called
+//Did not know that. A good reminder that I need more knowledge in baseline coding
 void Section1();
 void Section2();
 void Section3();
-void Section4();
+char Section4(); //Haven't used a function with this type before.. Facinating
 void Section5();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
 void CalculateGrade();
 void ConvertKm();
+void EndProgram();
+
+//Maybe a bad habbit of declaring all variables here
 
 //Variables for Section1()
 string name;
@@ -47,39 +53,66 @@ char userChar;
 //Variables for Section4() "Menu"
 char selector;
 
+
+
 int main()
 {
-	//Special characters (ä, ö, ü, etc.)
 	SetConsoleOutputCP(1252);
 	SetConsoleCP(1252);
 
 	cout << "The program starts:" << endl << endl;
 
-	
+	char choice; 
 
-	//Section2();
+	while (true) //The lession exercises really helped me finaly understand loops
+	{
+		choice = Section4();
 
-	//Section1();
+		switch (choice) //found someone recomending switch online
+		{
+		case '1':
+			Section1();
+			break;
 
-	//Section3();
+		case '2':
+			Section2();
+			break;
 
-	Section4();
+		case '3':
+			Section3();
+			break;
 
-	//Section5();
+		case '4':
+			cout << "You need help!" << endl << endl;
+			cout << "Helpful hint:" << endl;
+			cout << " Remember to press Enter after typing your choice." << endl << endl;
+			break;
 
-	//TuntiTehtävä5();
+		case '5':
+			Section5();
+			break;
 
-	cout << endl << "The program ends and shuts down automatically." << endl;
+		case 'Q': //Figured out that when we find a match here we just continue executing
+		case 'q':
+			cout << endl << "The program ends and shuts down automatically." << endl;
+			return 0;
+
+		default:
+			cout << "Invalid selection!" << endl << endl;
+		}
+	}
 }
 
+/*Basicly it goes like this:
+  Continue program - break
+  Exit function - return
+  Exit program - return from main*/
 
 void Section1()
 {
 	AskData();
 
 	PrintData();
-
-	Section4();
 }
 
 void Section2()
@@ -93,14 +126,13 @@ void Section2()
 	cout << "Thank you!" << endl << endl;
 	yearlySum = monthlyAmount * months;
 	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
-	Section4();
+	
 }
 
 void Section3()
 {
-	cout << "Count grade input 1" << endl;
-	cout << "Kilometer converter input 2" << endl;
-	cout << "Input: ";
+	cout << "1. Count grade" << endl;
+	cout << "2. Kilometer to miles converter" << endl;
 	cin >> fork;
 	
 	if (fork == 1) {
@@ -108,10 +140,11 @@ void Section3()
 		cout << "Score:";
 		cin >> userGivenScore;
 		CalculateGrade();
-		cout << "Your grade is: " << printedGrade << endl;
+		cout << "Your grade is: " << printedGrade << endl << endl;
 		if (userGivenScore == 100) {
 			cout << "Congratulations! You got full points!" << endl << endl;
 		}
+		return;
 	}
 	
 	if (fork == 2) {
@@ -125,11 +158,13 @@ void Section3()
 		Section3();
 	}
 
-	Section4();
+	return;
 }
 
-void Section4()
+char Section4()
 {
+	char selector;
+
 	cout << "Main Menu" << endl << endl;
 	cout << " 1. User information" << endl;
 	cout << " 2. Study support" << endl;
@@ -139,35 +174,39 @@ void Section4()
 	cout << " Q - Quit" << endl;
 	cin >> selector;
 
-	if (selector == '1') {
-		Section1();
-	}
-
-	if (selector == '2') {
-		Section2();
-	}
-
-	if (selector == '3') {
-		Section3();
-	}
-
-	if (selector == '4') {
-		cout << " You need help! " << endl << endl;
-		Section4();
-	}
-
-	if (selector == '5') {
-		Section5();
-	}
-
-	if (selector == 'Q' || selector == 'q') {
-		//Quit
-	}
+	return selector;
 }
 
 void Section5() 
 {
-	//Prime number check
+	//Variables for Section5()
+	int numb;
+	bool isPrime = true;
+
+	cout << "Give a positive number other than 1" << endl;
+	cout << "Number: ";
+	cin >> numb;
+
+	if (numb <= 1) {
+		isPrime = false;
+	}
+	else {
+		for (int i = 2; i < numb; i++) {
+			if (numb % i == 0) {
+				isPrime = false;
+				break;
+			}
+		}
+	}
+
+	if (isPrime) {
+		cout << numb << " is a prime number." << endl << endl;
+	}
+	else {
+		cout << numb << " is NOT a prime number." << endl << endl;
+	}
+
+	
 }
 
 void TuntiTehtävä5() {
@@ -311,5 +350,11 @@ void ConvertKm()
 	if (userChar == 'Q' || userChar == 'q') {
 		return;
 	}
+}
+
+void EndProgram()
+{
+	cout << endl << "The program ends and shuts down automatically." << endl;
+	exit(0); // Immediately ends the program
 }
 
