@@ -135,6 +135,7 @@ void Section4()
 	cout << " 2. Study support" << endl;
 	cout << " 3. Convert score and miles" << endl;
 	cout << " 4. Help" << endl;
+	cout << " 5. Prime numbers" << endl;
 	cout << " Q - Quit" << endl;
 	cin >> selector;
 
