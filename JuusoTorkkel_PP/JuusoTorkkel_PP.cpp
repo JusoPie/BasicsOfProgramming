@@ -13,6 +13,8 @@ using namespace std;
 void Section1();
 void Section2();
 void Section3();
+void Section4();
+void Section5();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
@@ -42,6 +44,8 @@ float miles;
 float nauticalMiles;
 char userChar;
 
+//Variables for Section4() "Menu"
+char selector;
 
 int main()
 {
@@ -59,7 +63,11 @@ int main()
 
 	//Section3();
 
-	TuntiTehtävä5();
+	Section4();
+
+	//Section5();
+
+	//TuntiTehtävä5();
 
 	cout << endl << "The program ends and shuts down automatically." << endl;
 }
@@ -70,6 +78,8 @@ void Section1()
 	AskData();
 
 	PrintData();
+
+	Section4();
 }
 
 void Section2()
@@ -83,6 +93,7 @@ void Section2()
 	cout << "Thank you!" << endl << endl;
 	yearlySum = monthlyAmount * months;
 	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
+	Section4();
 }
 
 void Section3()
@@ -113,11 +124,56 @@ void Section3()
 	else {
 		Section3();
 	}
+
+	Section4();
+}
+
+void Section4()
+{
+	cout << "Main Menu" << endl << endl;
+	cout << " 1. User information" << endl;
+	cout << " 2. Study support" << endl;
+	cout << " 3. Convert score and miles" << endl;
+	cout << " 4. Help" << endl;
+	cout << " Q - Quit" << endl;
+	cin >> selector;
+
+	if (selector == '1') {
+		Section1();
+	}
+
+	if (selector == '2') {
+		Section2();
+	}
+
+	if (selector == '3') {
+		Section3();
+	}
+
+	if (selector == '4') {
+		cout << " You need help! " << endl << endl;
+		Section4();
+	}
+
+	if (selector == '5') {
+		Section5();
+	}
+
+	if (selector == 'Q' || selector == 'q') {
+		//Quit
+	}
+}
+
+void Section5() 
+{
+	//Prime number check
 }
 
 void TuntiTehtävä5() {
 
-	float comparison;
+	//While, do ..While
+
+	/*float comparison;
 	float factor;
 	float result;
 	float num = 1;
@@ -130,7 +186,7 @@ void TuntiTehtävä5() {
 		result = num * factor;
 		cout << result << endl;
 		num = result;
-	} while ( result <= comparison);
+	} while ( result <= comparison);*/
 
 
 
