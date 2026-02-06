@@ -9,6 +9,14 @@
 
 #include <string>
 
+#include <limits>
+
+#include <stdlib.h>
+
+#include <time.h>
+
+#undef max
+
 using namespace std;
 
 //In C/C++ programs, functions must be declared before they are called
@@ -26,6 +34,9 @@ void ConvertKm();
 void EndProgram();
 
 //Maybe a bad habbit of declaring all variables here
+
+//variables for input handling
+bool inputOk;
 
 //Variables for Section1()
 string name;
@@ -52,7 +63,6 @@ char userChar;
 
 //Variables for Section4() "Menu"
 char selector;
-
 
 
 int main()
@@ -103,7 +113,7 @@ int main()
 	}
 }
 
-/*Basicly it goes like this:
+/*I think this qualifies as a rule of thumb:
   Continue program - break
   Exit function - return
   Exit program - return from main*/
@@ -275,8 +285,21 @@ void AskData()
 	cout << "Please type your information" << endl;
 	cout << "Your Name:";
 	cin >> name;
-	cout << "Your age:";
-	cin >> age;
+	// error if input is not int
+	while (true) {
+		cout << "Your age:";
+		cin >> age;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input" << endl;
+		}
+		else {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			break;
+		}
+	}
 	cout << "Student number:";
 	cin >> studentNumber;
 	cout << "Your height:";
