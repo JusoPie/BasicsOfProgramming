@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-#include <cstdlib> //Found that this library contains exits
-
 #include <Windows.h>
 
 #include <string>
@@ -15,7 +13,7 @@
 
 #include <time.h>
 
-#undef max
+#undef max //needed for the GetValidInput() some weird visual studio thing
 
 using namespace std;
 
@@ -31,10 +29,9 @@ void AskData();
 void PrintData();
 void CalculateGrade();
 void ConvertKm();
-void EndProgram();
+
 
 //Maybe a bad habbit of declaring all variables here
-
 
 //Variables for Section1()
 string name;
@@ -52,12 +49,10 @@ float yearlySum;
 //Grade
 int userGivenScore;
 int printedGrade;
-string fork;
 //Distance
 float distanceKm;
 float miles;
 float nauticalMiles;
-string userChar; 
 
 //Variables for Section4() "Menu"
 char selector;
@@ -71,11 +66,11 @@ int main()
 
 	char choice; 
 
-	while (true) //The lession exercises really helped me finaly understand loops
+	while (true) //The lession exercises really helped me understand loops better
 	{
 		choice = Section4();
 
-		switch (choice) //found someone recomending switch online
+		switch (choice) //found someone recomending switch online and tried it out here
 		{
 		case '1':
 			Section1();
@@ -101,11 +96,11 @@ int main()
 
 		case 'Q': //Figured out that when we find a match here we just continue executing
 		case 'q':
-			cout << endl << "The program ends and shuts down automatically." << endl;
+			cout << endl << "The program ends. Goodbye!" << endl;
 			return 0;
 
 		default:
-			cout << "Invalid selection!" << endl << endl;
+			cout << "You chose... poorly. Try again." << endl << endl;
 		}
 	}
 }
@@ -114,6 +109,54 @@ int main()
   Continue program - break
   Exit function - return
   Exit program - return from main*/
+
+//Made this cool function to make sure the given input is of desired type
+template <typename T> //First time using templates
+void GetValidInput(T& var, const string& prompt)
+{
+	while (true)
+	{
+		cout << prompt;
+		cin >> var;
+
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Ooops... Invalid input. TRY AGAIN!" << endl;
+		}
+		else
+		{
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			break;
+		}
+	}
+}
+
+//Use this for Section3()
+template <typename T>
+void GetValidInputInRange(T& var, const string& prompt, T min, T max)
+{
+	while (true)
+	{
+		cout << prompt;
+		cin >> var;
+
+		if (cin.fail() || var < min || var > max) //do this so that we get different error messages for each
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Invalid input. Allowed range: " << min << " - " << max << endl;
+		}
+		else
+		{
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			break;
+		}
+	}
+}
+
+
 
 void Section1()
 {
@@ -124,114 +167,56 @@ void Section1()
 
 void Section2()
 {
-	cout << "Enter the number of months you recive study support for this year" << endl;
-	while (true) 
-	{
-		cout << "Number of months:";
-		cin >> months;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			break;
-		}
-		
-	}
+	GetValidInput(months, "Number of months you recive study support: ");
+	GetValidInput(monthlyAmount, "Monthly amount (€): ");
+	yearlySum = monthlyAmount * months;
+	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
+}
+
+
+void Section3()
+{
+	char choice;
 
 	while (true)
 	{
-		cout << "What is the amount of monthly support? (123.45)" << endl;
-		cout << "Amount:";
-		cin >> monthlyAmount;
-		if (cin.fail())
+		cout << "1. Count grade" << endl;
+		cout << "2. Kilometer to miles converter" << endl;
+		cout << "Q. Return to main menu" << endl;
+
+		cin >> choice;
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		switch (choice)
 		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else
+		case '1':
 		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			GetValidInputInRange(userGivenScore, "Insert exam points (0–100): ", 0, 100);
+			CalculateGrade();
+			cout << "Your grade is: " << printedGrade << endl << endl;
+
+			if (userGivenScore == 100)
+				cout << "Congratulations! You got full points!" << endl << endl;
 			break;
 		}
+
+		case '2':
+		{
+			GetValidInput(distanceKm, "Give distance in kilometers: ");
+			ConvertKm();
+			break;
+		}
+
+		case 'Q':
+		case 'q':
+			return;
+
+		default:
+			cout << "Invalid selection. Try again." << endl << endl;
+		}
 	}
-	cout << "Thank you!" << endl << endl;
-	yearlySum = monthlyAmount * months;
-	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
-	
 }
 
-void Section3() //Here I use a string to check the choice
-{
-	cout << "1. Count grade" << endl;
-	cout << "2. Kilometer to miles converter" << endl;
-	cin >> fork;
-	
-	if (fork == "1") {
-		while (true)
-		{
-			cout << "Insert exam points (0-100) and you will recive a grade" << endl;
-			cout << "Score:";
-			cin >> userGivenScore;
-			if (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cout << "Invalid input" << endl;
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				break;
-			}
-		}
-		
-		CalculateGrade();
-
-		cout << "Your grade is: " << printedGrade << endl << endl;
-		if (userGivenScore == 100) {
-			cout << "Congratulations! You got full points!" << endl << endl;
-		}
-		return;
-	}
-	
-	if (fork == "2") {
-		while (true)
-		{
-			cout << "Give distance in kilometers" << endl;
-			cout << "Distance: ";
-			cin >> distanceKm;
-			if (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cout << "Invalid input" << endl;
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				break;
-			}
-		}
-		
-		ConvertKm();
-	}
-
-	else {
-		cout << "invalid input" << endl;
-		Section3();
-	}
-
-	return;
-}
 
 char Section4()
 {
@@ -342,69 +327,21 @@ void TuntiTehtävä5() {
 
 }
 
-void AskData() //Here I use cin.Fail to validate the user input. I tried to make a function of it but failed horribly.
+void AskData()
 {
 	cout << "Please type your information" << endl;
-	cout << "Your Name:";
+
+	cout << "Your Name: ";
 	cin >> name;
-	while (true) {
-		cout << "Your age:";
-		cin >> age;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			break;
-		}
-	}
-	while (true) {
-		cout << "Student number:";
-		cin >> studentNumber;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			break;
-		}
-	}
-	while (true) {
-		cout << "Your height:";
-		cin >> height;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			break;
-		}
-	}
-	while (true) {
-		cout << "Your weight:";
-		cin >> weight;
-		if (cin.fail()) {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << "Invalid input" << endl;
-		}
-		else {
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			break;
-		}
-	}
+
+	GetValidInput(age, "Your age: ");
+	GetValidInput(studentNumber, "Student number: ");
+	GetValidInput(height, "Your height: ");
+	GetValidInput(weight, "Your weight: ");
+
 	cout << endl << "Thank you!" << endl << endl;
 }
+
 
 void PrintData()
 {
@@ -414,75 +351,60 @@ void PrintData()
 	cout << "Your student number:" << studentNumber << endl;
 	cout << "Your height:" << height << endl;
 	cout << "Your weight:" << weight << endl << endl;
-	cout << "Your data has been saved to... nowhere." << endl << endl;
+	cout << "Your data has been saved... nowhere." << endl << endl;
 }
 
 void CalculateGrade()
 {
-	if (userGivenScore >= 0 && userGivenScore <= 49){
+	if (userGivenScore <= 49) 
 		printedGrade = 0;
-	}
-
-	if (userGivenScore >= 50 && userGivenScore <= 59) {
+	else if (userGivenScore <= 59) 
 		printedGrade = 1;
-	}
-
-	if (userGivenScore >= 60 && userGivenScore <= 69) {
+	else if (userGivenScore <= 69) 
 		printedGrade = 2;
-	}
-
-	if (userGivenScore >= 70 && userGivenScore <= 79) {
+	else if (userGivenScore <= 79) 
 		printedGrade = 3;
-	}
-
-	if (userGivenScore >= 80 && userGivenScore <= 89) {
+	else if (userGivenScore <= 89) 
 		printedGrade = 4;
-	}
-
-	if (userGivenScore >= 90 && userGivenScore <= 100) {
-		printedGrade = 5;
-	}
-
-	if (userGivenScore < 0 || userGivenScore > 100) {
-		cout << "You can't have less than 0 or more than 100 points.. Nice try!" << endl << endl;
-		Section3();
-	}
-
-
+	else printedGrade = 5;
 }
+
 
 void ConvertKm()
 {
-	cout << "M - Convert to miles" << endl;
-	cout << "N - Convert to nautical miles" << endl;
-	cout << "Q - Quit input" << endl;
-	cin >> userChar;
+	char choice;
 
-	if (userChar == "M" || userChar == "m") {
-		miles = distanceKm * 0.6215;
-		cout << "Distance in miles: " << miles << endl;
-	}
-
-	if (userChar == "N" || userChar == "n") {
-		nauticalMiles = distanceKm * 0.5399;
-		cout << "Distance in nautical miles: " << nauticalMiles << endl;
-	}
-
-	if (userChar == "Q" || userChar == "q") {
-		return;
-	}
-
-	else
+	while (true)
 	{
-		cin.clear();
+		cout << "M - Convert to miles" << endl;
+		cout << "N - Convert to nautical miles" << endl;
+		cout << "Q - Main menu" << endl;
+
+		cin >> choice;
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Invalid input" << endl;
+
+		switch (choice)
+		{
+		case 'M':
+		case 'm':
+			miles = distanceKm * 0.6215f;
+			cout << "Distance in miles: " << miles << endl << endl;
+			break;
+
+		case 'N':
+		case 'n':
+			nauticalMiles = distanceKm * 0.5399f;
+			cout << "Distance in nautical miles: " << nauticalMiles << endl << endl;
+			break;
+
+		case 'Q':
+		case 'q':
+			return;
+
+		default:
+			cout << "Oopsie... Did your finger slip? Try again." << endl << endl;
+		}
 	}
 }
 
-void EndProgram()
-{
-	cout << endl << "The program ends and shuts down automatically." << endl;
-	exit(0); // Immediately ends the program
-}
 
