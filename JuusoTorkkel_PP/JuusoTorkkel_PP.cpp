@@ -182,7 +182,7 @@ void Section3()
 	{
 		cout << "1. Count grade" << endl;
 		cout << "2. Kilometer to miles converter" << endl;
-		cout << "Q. Return to main menu" << endl;
+		cout << "Q. Main menu" << endl;
 
 		cin >> choice;
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -240,9 +240,7 @@ void Section5()
 	int numb;
 	bool isPrime = true;
 
-	cout << "Give a positive number other than 1" << endl;
-	cout << "Number: ";
-	cin >> numb;
+	GetValidInputInRange(numb, "Give a positive number other than 1: ", 2, 999999999);
 
 	if (numb <= 1) {
 		isPrime = false;
@@ -378,7 +376,7 @@ void ConvertKm()
 	{
 		cout << "M - Convert to miles" << endl;
 		cout << "N - Convert to nautical miles" << endl;
-		cout << "Q - Main menu" << endl;
+		cout << "Q - Cancel" << endl;
 
 		cin >> choice;
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
