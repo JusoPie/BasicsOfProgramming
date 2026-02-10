@@ -17,12 +17,11 @@
 
 using namespace std;
 
-//In C/C++ programs, functions must be declared before they are called
-//Did not know that. A good reminder that I need more knowledge in baseline coding
+//Functions
 void Section1();
 void Section2();
 void Section3();
-char Section4(); //Haven't used a function with this type before.. Facinating
+char Section4();
 void Section5();
 void TuntiTehtävä5();
 void AskData();
@@ -31,7 +30,7 @@ void CalculateGrade();
 void ConvertKm();
 
 
-//Maybe a bad habbit of declaring all variables here
+//All variables are global unless there were some errors
 
 //Variables for Section1()
 string name;
@@ -62,7 +61,7 @@ int main()
 	SetConsoleOutputCP(1252);
 	SetConsoleCP(1252);
 
-	cout << "The program starts:" << endl << endl;
+	cout << "Welcome!" << endl << endl;
 
 	char choice; 
 
@@ -122,7 +121,7 @@ void GetValidInput(T& var, const string& prompt)
 		if (cin.fail())
 		{
 			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); //I use this line often. Fixes an issue of many given characters triggering the menus multiple times
 			cout << "Ooops... Invalid input. TRY AGAIN!" << endl;
 		}
 		else
@@ -142,7 +141,7 @@ void GetValidInputInRange(T& var, const string& prompt, T min, T max)
 		cout << prompt;
 		cin >> var;
 
-		if (cin.fail() || var < min || var > max) //do this so that we get different error messages for each
+		if (cin.fail() || var < min || var > max)
 		{
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -157,13 +156,14 @@ void GetValidInputInRange(T& var, const string& prompt, T min, T max)
 }
 
 
-
+//Basic stuff
 void Section1()
 {
 	AskData();
 
 	PrintData();
 }
+
 
 void Section2()
 {
@@ -173,7 +173,7 @@ void Section2()
 	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
 }
 
-
+//Here im using the same kind of selection method like in Main()
 void Section3()
 {
 	char choice;
@@ -217,7 +217,7 @@ void Section3()
 	}
 }
 
-
+//The menu. I'm kinda impressed I got it working
 char Section4()
 {
 	char selector;
@@ -230,17 +230,19 @@ char Section4()
 	cout << " 5. Prime numbers" << endl;
 	cout << " Q - Quit" << endl;
 	cin >> selector;
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
 	return selector;
 }
 
+//This method works bechause you return to the menu everytime after trying
 void Section5() 
 {
 	//Variables for Section5()
 	int numb;
 	bool isPrime = true;
 
-	GetValidInputInRange(numb, "Give a positive number other than 1: ", 2, 999999999);
+	GetValidInputInRange(numb, "Give a positive number other than 1: ", 2, 999999999); //Unconventional maybe
 
 	if (numb <= 1) {
 		isPrime = false;
@@ -354,17 +356,13 @@ void PrintData()
 
 void CalculateGrade()
 {
-	if (userGivenScore <= 49) 
-		printedGrade = 0;
-	else if (userGivenScore <= 59) 
-		printedGrade = 1;
-	else if (userGivenScore <= 69) 
-		printedGrade = 2;
-	else if (userGivenScore <= 79) 
-		printedGrade = 3;
-	else if (userGivenScore <= 89) 
-		printedGrade = 4;
+	if (userGivenScore <= 49) printedGrade = 0;
+	else if (userGivenScore <= 59) printedGrade = 1;
+	else if (userGivenScore <= 69) printedGrade = 2;
+	else if (userGivenScore <= 79) printedGrade = 3;
+	else if (userGivenScore <= 89) printedGrade = 4;
 	else printedGrade = 5;
+	//No unnecessary lines
 }
 
 
@@ -385,13 +383,13 @@ void ConvertKm()
 		{
 		case 'M':
 		case 'm':
-			miles = distanceKm * 0.6215f;
+			miles = distanceKm * 0.6215f; //Confirmed by the internet
 			cout << "Distance in miles: " << miles << endl << endl;
 			break;
 
 		case 'N':
 		case 'n':
-			nauticalMiles = distanceKm * 0.5399f;
+			nauticalMiles = distanceKm * 0.5399f; //Confirmed by the internet
 			cout << "Distance in nautical miles: " << nauticalMiles << endl << endl;
 			break;
 
