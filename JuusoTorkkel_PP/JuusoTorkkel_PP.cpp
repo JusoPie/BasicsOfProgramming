@@ -13,6 +13,8 @@
 
 #include <time.h>
 
+#include <chrono>
+
 #undef max //needed for the GetValidInput() some weird visual studio thing
 
 using namespace std;
@@ -23,6 +25,9 @@ void Section2();
 void Section3();
 char Section4();
 void Section5();
+void Section6();
+void Section7();
+void Section8();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
@@ -91,6 +96,18 @@ int main()
 
 		case '5':
 			Section5();
+			break;
+
+		case '6':
+			Section6();
+			break;
+
+		case '7':
+			Section7();
+			break;
+
+		case '8':
+			Section8();
 			break;
 
 		case 'Q': //Figured out that when we find a match here we just continue executing
@@ -228,6 +245,9 @@ char Section4()
 	cout << " 3. Convert score and miles" << endl;
 	cout << " 4. Help" << endl;
 	cout << " 5. Prime numbers" << endl;
+	cout << " 6. Randomizer" << endl;
+	cout << " 7. Sentence analyzer" << endl;
+	cout << " 8. Reserve your seat" << endl;
 	cout << " Q - Quit" << endl;
 	cin >> selector;
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -264,6 +284,40 @@ void Section5()
 	}
 
 	
+}
+
+void Section6() 
+{
+	using namespace std::chrono; //when I declared this after the includes it gave an error to the int months in section2()
+
+	int rnd = (rand() % 50001) + 50000;
+
+	auto start_time = high_resolution_clock::now();
+
+	//print 50,000 - 100,000 random characters form a to z
+	for (int i = 0; i < rnd; i++) {
+
+		char randomCharacter = 'a' + rand() % 26;
+
+		cout << randomCharacter;
+	}
+
+	auto end_time = high_resolution_clock::now();
+
+	duration<double> time_span = duration_cast<duration<double>>(end_time - start_time);
+
+	cout << "\n\nLoop took " << time_span.count() << " seconds.\n";
+
+}
+
+void Section7()
+{
+	cout << "Work in progress.. Returning to main menu.." << endl << endl;
+}
+
+void Section8()
+{
+	cout << "Work in progress.. Returning to main menu.." << endl << endl;
 }
 
 void TuntiTehtävä5() {
