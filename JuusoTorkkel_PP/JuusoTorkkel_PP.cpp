@@ -290,6 +290,7 @@ void Section6()
 {
 	using namespace std::chrono; //when I declared this after the includes it gave an error to the int months in section2()
 
+	//something between 50000 and 100000
 	int rnd = (rand() % 50001) + 50000;
 
 	auto start_time = high_resolution_clock::now();
