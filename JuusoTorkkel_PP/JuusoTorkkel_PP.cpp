@@ -257,6 +257,7 @@ char Section4()
 	cout << " 6. Randomizer" << endl;
 	cout << " 7. Sentence analyzer" << endl;
 	cout << " 8. Reserve your seat" << endl;
+	cout << " 9. Number generator" << endl;
 	cout << " Q - Quit" << endl;
 	cin >> selector;
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -364,7 +365,16 @@ void Section8()
 
 void Section9()
 {
-	cout << "Work in progress.. Returning to main menu.." << endl << endl;
+	int temp;
+	int arr[40];
+
+	int min = -10, max = 10;
+	for (int i = 0; i < 40; i++) {
+		temp = (rand() % (max - min + 1)) + min;
+		arr[i] = temp;
+		cout << temp << endl;
+	}
+	cout << arr << endl;
 }
 
 void TuntiTehtävä5() {
@@ -425,6 +435,31 @@ void TuntiTehtävä5() {
 	while (num <= posNum) {
 		cout << num++ << endl;*/
 	
+
+}
+
+void Odds()
+{
+
+}
+
+void Evens()
+{
+
+}
+
+void Positives() 
+{
+
+}
+
+void Negatives() 
+{
+
+}
+
+void HowManyZeros()
+{
 
 }
 
