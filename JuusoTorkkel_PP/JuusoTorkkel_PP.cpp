@@ -15,6 +15,10 @@
 
 #include <chrono>
 
+#include <cmath>
+
+#include <array>
+
 #undef max //needed for the GetValidInput() some weird visual studio thing
 
 using namespace std;
@@ -28,6 +32,7 @@ void Section5();
 void Section6();
 void Section7();
 void Section8();
+void Section9();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
@@ -108,6 +113,10 @@ int main()
 
 		case '8':
 			Section8();
+			break;
+
+		case '9':
+			Section9();
 			break;
 
 		case 'Q': //Figured out that when we find a match here we just continue executing
@@ -317,6 +326,43 @@ void Section7()
 }
 
 void Section8()
+{
+	//cout << "Work in progress.. Returning to main menu.." << endl << endl;
+
+	//Declare and initialize integers assigning them values;
+	array<int, 3> integers = { 10, 20, 30 };
+
+	//Loop through integers array and print values:
+	for (int i = 0; i < integers.size(); i++)
+	{
+		cout << integers[i] << " ";
+	}
+
+	//Declare floats array:
+	array<float, 5> floats;
+
+	cout << "\nFloats array size: " << floats.size() << endl;
+
+	//Assign values in for loop:
+	for (int i = 0; i < floats.size(); i++)
+	{
+		floats[i] = i * 10.0f;
+	}
+
+	//Print values in another for loop
+	for (int i = 0; i < floats.size(); i++)
+	{
+		if (i < floats.size() - 1) {
+			cout << floats[i] << ", ";
+		}
+		else {
+			cout << floats[i] << endl << endl;
+		}
+	}
+	
+}
+
+void Section9()
 {
 	cout << "Work in progress.. Returning to main menu.." << endl << endl;
 }
