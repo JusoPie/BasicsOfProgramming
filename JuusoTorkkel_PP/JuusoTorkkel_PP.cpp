@@ -38,6 +38,12 @@ void AskData();
 void PrintData();
 void CalculateGrade();
 void ConvertKm();
+void AnalyzeSentence(string sentence);
+int Odds(int arr[], int size);
+int Evens(int arr[], int size);
+int Positives(int arr[], int size);
+int Negatives(int arr[], int size);
+int HowManyZeros(int arr[], int size);
 
 
 //All variables are global unless there were some errors
@@ -243,7 +249,7 @@ void Section3()
 	}
 }
 
-//The menu. I'm kinda impressed I got it working
+//The menu
 char Section4()
 {
 	char selector;
@@ -257,7 +263,7 @@ char Section4()
 	cout << " 6. Randomizer" << endl;
 	cout << " 7. Sentence analyzer" << endl;
 	cout << " 8. Reserve your seat" << endl;
-	cout << " 9. Number generator" << endl;
+	cout << " 9. Number type analyzer" << endl;
 	cout << " Q - Quit" << endl;
 	cin >> selector;
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -317,64 +323,86 @@ void Section6()
 
 	duration<double> time_span = duration_cast<duration<double>>(end_time - start_time);
 
-	cout << "\n\nLoop took " << time_span.count() << " seconds.\n";
-
+	cout << "\n\nLoop took " << time_span.count() << " seconds.\n"; 
+	//forgot that i can use \n to do a linebreak so I reminded myself here
 }
 
 void Section7()
 {
-	cout << "Work in progress.. Returning to main menu.." << endl << endl;
+	string input;
+	cout << "Enter a sentence: ";
+	getline(cin, input);
+
+	AnalyzeSentence(input);
 }
 
 void Section8()
 {
-	//cout << "Work in progress.. Returning to main menu.." << endl << endl;
+	const int ROWS = 10;
+	const int SEATS = 20;
 
-	//Declare and initialize integers assigning them values;
-	array<int, 3> integers = { 10, 20, 30 };
+	string seats[ROWS][SEATS];
 
-	//Loop through integers array and print values:
-	for (int i = 0; i < integers.size(); i++)
+	//Draw the layout of the seats
+	cout << "---------- Movie Theater Seating ----------\n\n";
+
+	for (int i = 0; i < ROWS; i++)
 	{
-		cout << integers[i] << " ";
-	}
-
-	//Declare floats array:
-	array<float, 5> floats;
-
-	cout << "\nFloats array size: " << floats.size() << endl;
-
-	//Assign values in for loop:
-	for (int i = 0; i < floats.size(); i++)
-	{
-		floats[i] = i * 10.0f;
-	}
-
-	//Print values in another for loop
-	for (int i = 0; i < floats.size(); i++)
-	{
-		if (i < floats.size() - 1) {
-			cout << floats[i] << ", ";
+		cout << "Row " << setw(2) << i + 1 << ": ";  // pad row numbers
+		for (int a = 0; a < SEATS; a++)
+		{
+			//Store seat number as two-character string for alignment
+			seats[i][a] = (a + 1 < 10 ? " " : "") + to_string(a + 1);
+			cout << setw(3) << seats[i][a];
 		}
-		else {
-			cout << floats[i] << endl << endl;
-		}
+		cout << endl << endl;
 	}
-	
+
+	//Ask for a row and a seat
+	int inputRow, inputSeat;
+	GetValidInputInRange(inputRow, "Choose row: ", 1, ROWS);
+	GetValidInputInRange(inputSeat, "Choose seat: ", 1, SEATS);
+
+	//Mark the seat
+	seats[inputRow - 1][inputSeat - 1] = "XX";
+
+	//Redraw the seating layout
+	cout << "\n---------- Updated Seating Chart ----------\n\n";
+
+	for (int i = 0; i < ROWS; i++)
+	{
+		cout << "Row " << setw(2) << i + 1 << ": ";
+		for (int a = 0; a < SEATS; a++)
+		{
+			cout << setw(3) << seats[i][a];
+		}
+		cout << endl << endl;
+	}
+
 }
 
 void Section9()
 {
-	int temp;
+	//declarations
+	int num;
 	int arr[40];
-
 	int min = -10, max = 10;
+
+	//print 40 random numbers from -10 to 10
 	for (int i = 0; i < 40; i++) {
-		temp = (rand() % (max - min + 1)) + min;
-		arr[i] = temp;
-		cout << temp << endl;
+		num = (rand() % (max - min + 1)) + min; //TODO: change to more random. now the first run is always the same.
+		arr[i] = num;
+		cout << num << endl;
 	}
-	cout << arr << endl;
+
+	//Call the counting functions and print the counts
+	cout << "Odd: " << Odds(arr, 40) << endl;
+	cout << "Even: " << Evens(arr, 40) << endl;
+	cout << "Positive: " << Positives(arr, 40) << endl;
+	cout << "Negative: " << Negatives(arr, 40) << endl;
+	cout << "Zero: " << HowManyZeros(arr, 40) << endl;
+
+	
 }
 
 void TuntiTehtävä5() {
@@ -438,29 +466,90 @@ void TuntiTehtävä5() {
 
 }
 
-void Odds()
-{
+void AnalyzeSentence(string sentence) {
+	int characters = 0;
+	int clauses = 1; // There is always at least one clause
 
+	//leave out spaces and tab
+	for (int i = 0; i < sentence.length(); i++) {
+		if (sentence[i] != ' ' && sentence[i] != '\t')
+			characters++;
+	}
+
+	// Check clause indicators
+	string conjunctions[] = {
+		" and ", " but ", " or ", " because ",
+		" although ", " while ", " if ", " when "
+	};
+
+	for (int i = 0; i < 8; i++) {
+		size_t pos = sentence.find(conjunctions[i]);
+		while (pos != string::npos) {
+			clauses++;
+			pos = sentence.find(conjunctions[i], pos + 1);
+		}
+	}
+
+	// Also count colons and semicolons
+	for (int i = 0; i < sentence.length(); i++) {
+		if (sentence[i] == ',' || sentence[i] == ';')
+			clauses++;
+	}
+
+	cout << "Character count: " << characters << endl;
+
+	if (clauses == 1) {
+		cout << "Simple sentence" << endl;
+	}
+	else {
+		cout << "Compound/Complex sentence" << endl;
+		cout << "Number of clauses: " << clauses << endl;
+	}
 }
 
-void Evens()
+int Odds(int arr[], int size)
 {
-
+	int count = 0;
+	for (int i = 0; i < size; i++)
+		if (arr[i] % 2 != 0)
+			count++;
+	return count;
 }
 
-void Positives() 
+int Evens(int arr[], int size)
 {
-
+	int count = 0;
+	for (int i = 0; i < size; i++)
+		if (arr[i] % 2 == 0)
+			count++;
+	return count;
 }
 
-void Negatives() 
+int Positives(int arr[], int size)
 {
-
+	int count = 0;
+	for (int i = 0; i < size; i++)
+		if (arr[i] > 0)
+			count++;
+	return count;
 }
 
-void HowManyZeros()
+int Negatives(int arr[], int size)
 {
+	int count = 0;
+	for (int i = 0; i < size; i++)
+		if (arr[i] < 0)
+			count++;
+	return count;
+}
 
+int HowManyZeros(int arr[], int size)
+{
+	int count = 0;
+	for (int i = 0; i < size; i++)
+		if (arr[i] == 0)
+			count++;
+	return count;
 }
 
 void AskData()
