@@ -19,6 +19,10 @@
 
 #include <array>
 
+#include <fstream>
+
+#include <list>
+
 #undef max //needed for the GetValidInput() some weird visual studio thing
 
 using namespace std;
@@ -33,6 +37,7 @@ void Section6();
 void Section7();
 void Section8();
 void Section9();
+void Section10();
 void TuntiTehtävä5();
 void AskData();
 void PrintData();
@@ -194,6 +199,7 @@ void Section1()
 	AskData();
 
 	PrintData();
+
 }
 
 
@@ -239,7 +245,7 @@ void Section3()
 			break;
 		}
 
-		case 'Q':
+		case 'Q': //can prompt q or Q
 		case 'q':
 			return;
 
@@ -403,6 +409,12 @@ void Section9()
 	cout << "Zero: " << HowManyZeros(arr, 40) << endl;
 
 	
+}
+
+void Section10()
+{
+	//if user.dat exists--load user data from user.dat
+	//else--create user.dat
 }
 
 void TuntiTehtävä5() {
