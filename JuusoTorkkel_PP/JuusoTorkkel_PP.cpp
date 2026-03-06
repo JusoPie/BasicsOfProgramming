@@ -27,7 +27,7 @@
 
 using namespace std;
 
-//Functions
+//Function declarations here for clarity.
 void Section1();
 void Section2();
 void Section3();
@@ -38,7 +38,6 @@ void Section7();
 void Section8();
 void Section9();
 void Section10();
-void TuntiTehtävä5();
 void AskData();
 void PrintData();
 void CalculateGrade();
@@ -50,8 +49,7 @@ int Positives(int arr[], int size);
 int Negatives(int arr[], int size);
 int HowManyZeros(int arr[], int size);
 
-
-//All variables are global unless there were some errors
+//Global variables
 
 //Variables for Section1()
 string name;
@@ -82,7 +80,11 @@ int main()
 	SetConsoleOutputCP(1252);
 	SetConsoleCP(1252);
 
-	cout << "Welcome!" << endl << endl;
+	//Seed the random with OS.Time
+	srand(time(NULL));
+
+	//Check if user data exists
+	Section10();
 
 	char choice; 
 
@@ -158,7 +160,8 @@ void GetValidInput(T& var, const string& prompt)
 		if (cin.fail())
 		{
 			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n'); //I use this line often. Fixes an issue of many given characters triggering the menus multiple times
+			//I use this line often. Fixes an issue of many given characters triggering the menus multiple times
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 			cout << "Ooops... Invalid input. TRY AGAIN!" << endl;
 		}
 		else
@@ -167,6 +170,8 @@ void GetValidInput(T& var, const string& prompt)
 			break;
 		}
 	}
+
+	//No need to return since void is a non return-type
 }
 
 //Use this for Section3()
@@ -190,27 +195,53 @@ void GetValidInputInRange(T& var, const string& prompt, T min, T max)
 			break;
 		}
 	}
+
+	//No need to return since void is a non return-type
 }
 
 
-//Basic stuff
+//Information section
+//Creates and stores the data to a file. If no file "data.dat" found, we crate it locally
 void Section1()
 {
 	AskData();
 
 	PrintData();
 
+	//create or overwrite user.dat
+	ofstream outFile("user.dat");
+
+	if (outFile.is_open())
+	{
+		outFile << name << endl;
+		outFile << age << endl;
+		outFile << studentNumber << endl;
+		outFile << height << endl;
+		outFile << weight << endl;
+
+		outFile.close();
+		cout << "Your data has been saved locally!" << endl << endl;
+	}
+	else
+	{
+		cout << "Error saving file!" << endl << endl;
+	}
+
+	//No need to return since void is a non return-type
 }
 
 
 void Section2()
 {
-	GetValidInput(months, "Number of months you recive study support: ");
+	GetValidInputInRange(months, "Number of months you recive study support: ", 1, 12);
 	GetValidInput(monthlyAmount, "Monthly amount (€): ");
 	yearlySum = monthlyAmount * months;
 	cout << "The amount of study support is " << yearlySum << "€ per year." << endl << endl;
+
+	//No need to return since void is a non return-type
 }
 
+//Count grade and compare distance
 //Here im using the same kind of selection method like in Main()
 void Section3()
 {
@@ -253,6 +284,8 @@ void Section3()
 			cout << "Invalid selection. Try again." << endl << endl;
 		}
 	}
+
+	//No need to return since void is a non return-type
 }
 
 //The menu
@@ -277,7 +310,9 @@ char Section4()
 	return selector;
 }
 
-//This method works bechause you return to the menu everytime after trying
+//Prime number check
+//doesn't loop because the results were not reliable after the first promt. (Don't know why)
+//Works when circling through the menu each time
 void Section5() 
 {
 	//Variables for Section5()
@@ -304,9 +339,13 @@ void Section5()
 	else {
 		cout << numb << " is NOT a prime number." << endl << endl;
 	}
+	if (numb == 67){
+		cout << "67676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767" << endl << '\n';
+	}
 
-	
+	//No need to return since void is a non return-type
 }
+
 
 void Section6() 
 {
@@ -315,7 +354,7 @@ void Section6()
 	//something between 50000 and 100000
 	int rnd = (rand() % 50001) + 50000;
 
-	auto start_time = high_resolution_clock::now();
+	auto start_time = high_resolution_clock::now(); 
 
 	//print 50,000 - 100,000 random characters form a to z
 	for (int i = 0; i < rnd; i++) {
@@ -329,8 +368,10 @@ void Section6()
 
 	duration<double> time_span = duration_cast<duration<double>>(end_time - start_time);
 
-	cout << "\n\nLoop took " << time_span.count() << " seconds.\n"; 
+	cout << "\n\nPrinting " << rnd << " characters took " << time_span.count() << " seconds.\n\n";
 	//forgot that i can use \n to do a linebreak so I reminded myself here
+
+	//No need to return since void is a non return-type
 }
 
 void Section7()
@@ -340,6 +381,8 @@ void Section7()
 	getline(cin, input);
 
 	AnalyzeSentence(input);
+
+	//No need to return since void is a non return-type
 }
 
 void Section8()
@@ -357,7 +400,7 @@ void Section8()
 		cout << "Row " << setw(2) << i + 1 << ": ";  // pad row numbers
 		for (int a = 0; a < SEATS; a++)
 		{
-			//Store seat number as two-character string for alignment
+			//Store seat number as two-character string for alignment. This turned out to be tricky.
 			seats[i][a] = (a + 1 < 10 ? " " : "") + to_string(a + 1);
 			cout << setw(3) << seats[i][a];
 		}
@@ -385,6 +428,7 @@ void Section8()
 		cout << endl << endl;
 	}
 
+	//No need to return since void is a non return-type
 }
 
 void Section9()
@@ -397,7 +441,7 @@ void Section9()
 	//print 40 random numbers from -10 to 10
 	for (int i = 0; i < 40; i++) {
 		num = (rand() % (max - min + 1)) + min; //TODO: change to more random. now the first run is always the same.
-		arr[i] = num;
+		arr[i] = num;                           //Done: Forgot to seed the random in main()
 		cout << num << endl;
 	}
 
@@ -408,74 +452,32 @@ void Section9()
 	cout << "Negative: " << Negatives(arr, 40) << endl;
 	cout << "Zero: " << HowManyZeros(arr, 40) << endl;
 
-	
+	//No need to return since void is a non return-type
 }
 
 void Section10()
 {
-	//if user.dat exists--load user data from user.dat
-	//else--create user.dat
-}
+	ifstream inFile("user.dat");
 
-void TuntiTehtävä5() {
-
-	//While, do ..While
-
-	/*float comparison;
-	float factor;
-	float result;
-	float num = 1;
-	cout << "Give a positive number: ";
-	cin >> comparison;
-	cout << "Give a factor: ";
-	cin >> factor;
-	do
+	if (inFile.is_open())
 	{
-		result = num * factor;
-		cout << result << endl;
-		num = result;
-	} while ( result <= comparison);*/
+		getline(inFile, name); //getLine only here because name is string
+		inFile >> age;
+		inFile >> studentNumber;
+		inFile >> height;
+		inFile >> weight;
 
+		inFile.close();
 
-
-	/*int num;
-	int howManyCharsLong = 0;
-	cout << "Give a number:" << endl;
-	cin >> num;
-	while (num > 0) {
-		howManyCharsLong++;
-		num /= 10;
+		cout << "Welcome back, " << name << "!" << endl << endl;
 	}
-	cout << "The number has " << howManyCharsLong << " characters";*/
-	
-	/*int num = -1;
-	while (num < 6) {
-		num++;
-		if(num == 3 || num == 5){
-			continue;
-		}
-		cout << num << endl;
-	}*/
-
-	/*int input;
-	cout << "Give any number but (5)" << endl;
-	cin >> input;
-	while (input != 5) {
-		cout << "Give any number but (5)" << endl;
-		cin >> input;
+	else 
+	{
+		cout << "Welcome!" << endl << endl; //If no data.dat the user is required to input the information
+		Section1();
 	}
-	cout << "Stop that!" << endl;*/
 
-	/*int posNum;
-	int num;
-	cout << "Enter a positive number greater than 1" << endl;
-	cout << "Number: ";
-	cin >> posNum;
-	num = 1;
-	while (num <= posNum) {
-		cout << num++ << endl;*/
-	
-
+	//No need to return since void is a non return-type
 }
 
 void AnalyzeSentence(string sentence) {
@@ -488,10 +490,12 @@ void AnalyzeSentence(string sentence) {
 			characters++;
 	}
 
-	// Check clause indicators
+	// Check common clause indicators
 	string conjunctions[] = {
 		" and ", " but ", " or ", " because ",
-		" although ", " while ", " if ", " when "
+		" although ", " while ", " if ", " when ",
+		" ja ", " mutta ", " kun ", " jos ", " vaikka ", " koska ",
+		" sillä ", " jotta "
 	};
 
 	for (int i = 0; i < 8; i++) {
@@ -517,6 +521,8 @@ void AnalyzeSentence(string sentence) {
 		cout << "Compound/Complex sentence" << endl;
 		cout << "Number of clauses: " << clauses << endl;
 	}
+
+	//No need to return since void is a non return-type
 }
 
 int Odds(int arr[], int size)
@@ -577,18 +583,22 @@ void AskData()
 	GetValidInput(weight, "Your weight: ");
 
 	cout << endl << "Thank you!" << endl << endl;
+
+	//No need to return since void is a non return-type
 }
 
 
 void PrintData()
 {
 	cout << "The information you have given:" << endl;
-	cout << "Your name:" << name << endl;
-	cout << "Your age:" << age << endl;
-	cout << "Your student number:" << studentNumber << endl;
-	cout << "Your height:" << height << endl;
-	cout << "Your weight:" << weight << endl << endl;
-	cout << "Your data has been saved... nowhere." << endl << endl;
+	cout << "Name:" << name << endl;
+	cout << "Age:" << age << endl;
+	cout << "Student number:" << studentNumber << endl;
+	cout << "Height:" << height << endl;
+	cout << "Weight:" << weight << endl << endl;
+	cout << "You can update the informaton in Personal information-section" << endl << endl;
+
+	//No need to return since void is a non return-type
 }
 
 void CalculateGrade()
@@ -599,7 +609,8 @@ void CalculateGrade()
 	else if (userGivenScore <= 79) printedGrade = 3;
 	else if (userGivenScore <= 89) printedGrade = 4;
 	else printedGrade = 5;
-	//No unnecessary lines
+
+	//No need to return since void is a non return-type
 }
 
 
@@ -607,6 +618,7 @@ void ConvertKm()
 {
 	char choice;
 
+	//Im starting to like switches
 	while (true)
 	{
 		cout << "M - Convert to miles" << endl;
@@ -620,7 +632,7 @@ void ConvertKm()
 		{
 		case 'M':
 		case 'm':
-			miles = distanceKm * 0.6215f; //Confirmed by the internet
+			miles = distanceKm * 0.6215f; // one km is 0,6215 miles
 			cout << "Distance in miles: " << miles << endl << endl;
 			break;
 
@@ -638,6 +650,7 @@ void ConvertKm()
 			cout << "Oopsie... Did your finger slip? Try again." << endl << endl;
 		}
 	}
+	//No need to return since void is a non return-type
 }
 
 
