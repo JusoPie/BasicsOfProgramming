@@ -574,9 +574,8 @@ void AskData()
 {
 	cout << "Please type your information" << endl;
 
-	cout << "Your Name: ";
-	cin >> name;
 
+	GetValidInput(name, "Your Name: ");
 	GetValidInput(age, "Your age: ");
 	GetValidInput(studentNumber, "Student number: ");
 	GetValidInput(height, "Your height: ");
@@ -590,12 +589,12 @@ void AskData()
 
 void PrintData()
 {
-	cout << "The information you have given:" << endl;
-	cout << "Name:" << name << endl;
-	cout << "Age:" << age << endl;
-	cout << "Student number:" << studentNumber << endl;
-	cout << "Height:" << height << endl;
-	cout << "Weight:" << weight << endl << endl;
+	cout << "The information you have given: " << endl;
+	cout << "Name: " << name << endl;
+	cout << "Age: " << age << endl;
+	cout << "Student number: " << studentNumber << endl;
+	cout << "Height: " << height << endl;
+	cout << "Weight: " << weight << endl << endl;
 	cout << "You can update the informaton in Personal information-section" << endl << endl;
 
 	//No need to return since void is a non return-type
